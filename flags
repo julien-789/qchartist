@@ -1,0 +1,57 @@
+Hello everybody,
+
+i use the RQPC RapidQ Pre Compiler from Jacques and i compile C++ code in my RapidQ program.
+But the problem is that i don't know how to link new libraries (flags) for the mingw G++ compiler that is used by RQPC.
+For example if i want to link C++ OpenGL library in need to use the -lGL flag with G++
+Can anybody add this functionality to RQPC that will allow to use custom flags for the compiler, this would help me a lot for example to use python code in my RapidQ programs. Jacques didn't share the source code of his RQPC unfortunately.
+
+Thank you for your help!
+
+In fact, to run a python code, i want to link the python library to g++, include my python code to example.cpp
+#include "Python.h"
+Py_Initialize();
+and so on....
+and then use rqpc to compile example.bas with example.cpp
+compile example: g++ art_wrapper.c main.cpp -o main -lpython2.8
+I know this is technically possible, so that i can use values of the variables of my python calculations directly in my rapidq.bas program
+But to do that rqpc should be able to accept the option to include custom libraries to link with g++ (-lpython2.8)
+
+I found a way to do what i want without modifying rqpc but it's a bit tricky.
+For the moment, the only workaround i found is to rename g++ to g++2.exe and create a new g++ executable that will collect the command line arguments of itself (after %0 (g++ itself)) and that will execute g++2.exe with all the collected arguments + -lpython2.8
+Then, when RQPC will call g++, g++2 (the original file) will be executed with the new flag -lpython2.8
+
+Hello Jacques, thank you for your code of the g++.bat
+I managed to make it work !
+
+In fact RQPC needs a g++.exe so i had to convert my g++.bat to g++.exe with a bat2exe converter
+
+I found this converter which works fine : https://github.com/tokyoneon/B2E
+https://qchartist.net/files/utils/Bat_To...verter.zip
+
+My g++.bat for example contains this line :
+c:\myprogram\mingw\bin\g++2.exe %* -lopengl32 -lglu32 -lglut
+rem So we add opengl C++ support to our RapidQ program Smile
+
+i rename the original g++.exe to g++2.exe and
+i create a g++.exe with the B2E tool from my g++.bat
+
+myprogram.bas contains the rapidq code:
+''pre cmd FBVERSION=017 FBLANG=deprecated run enc noopt exe con NoDone icon myprogram.ico kill includes\cppincludes.cpp
+''pre end
+'Compiler Directives
+$APPTYPE console 'GUI
+$OPTIMIZE on
+$TYPECHECK on
+dim cpptmpfuncreturn as string
+myvar = VAL(mytext.Text)
+defstr myvarstr=str$(myvar):cpptmpfuncreturn=varptr$(setsomething(varptr(myvarstr))) ' we interact with c++ this way
+and so on...
+
+includes\cppincludes.cpp contains the c++ source code of our opengl program to include to our rapidq myprogram.bas :
+// ''RQEXPORT function setsomething(parameter)
+#include "includes\myopenglprogram.cpp"
+
+then i compile my program with
+rqpc\rqpc myprogram.bas
+
+bingo 
