@@ -1,0 +1,51 @@
+Hello, i plan to integrate Pandas-TA to QChartist
+
+It is a little of work but can be easily done. I just need to find the time.
+
+Pandas Technical Analysis (Pandas TA) is an easy to use library that leverages the Pandas library with more than 130 Indicators and Utility functions. Many commonly used indicators are included, such as: Simple Moving Average (sma) Moving Average Convergence Divergence (macd), Hull Exponential Moving Average (hma), Bollinger Bands (bbands), On-Balance Volume (obv), Aroon & Aroon Oscillator (aroon), Squeeze (squeeze) and many more.
+
+https://github.com/Data-Analisis/Technical-Analysis-Indicators---Pandas
+
+Here is a great python script made with the help of ai chat bot.
+
+Here you can load a csv file and add to the chart some of all the available indicators from Pandas-TA and TA-Lib with multiple separate panels.
+
+As a result : more than 150 indicators available.
+
+The result is saved to a png and bmp file.
+
+The bmp file can then be loaded from qchartist.
+
+You need to download and install ta-lib from the official website, and install pandas, mplfinance, pandas_ta and talib with pip
+
+Usage: python example4.py <csv_filename> <start_datetime> <end_datetime> <show_volume: yes|no>
+Example: python example4.py 'YHOO1440.csv' '2014-01-01 00:00' '2015-06-01 16:00' yes
+
+csv : qchartist and mt4 file format
+
+When you enter your indicators to use, press 'q' to exit the helper.
+
+In the future, maybe i will integrate this script within the qchartist engine.
+
+Hope you will like it. 
+
+python_charts.zip 
+
+Problem is that Pandas module crashs under Python3.8 w32 (included with qchartist)
+However it works fine on a recent version of Python installation amd64
+It will be complicate to make the script interoperable with qchartist
+I believe porting pandas-ta and ta-lib indicators to qchartist will be less painful 
+
+Added finta module and indicators support
+
+Finta supports over 80 trading indicators
+
+See zip file attached
+
+Enjoy! 
+
+python_charts2.zip
+
+And without TA modules, Python38-32 compatible file example below.
+
+example10.zip
