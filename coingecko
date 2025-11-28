@@ -1,0 +1,22 @@
+Good news: CoinGecko datasource will soon be supported by qchartist
+
+This idea to add this new data source came from the fact that i was not able to get the crypto chart of vault ai vaulta ausdt with the current available data sources of qchartist.
+I was a bit fustrated that tradingview had this coin and even other new coins but not qchartist
+
+Here are the python scripts in the attached zip file that will be used to get historical data and coin id list from the coingecko api.
+You can already use them with your python interpreter and open the obtained csv in qchartist.
+
+As you can see, i had to exclude the use of pandas and numpy modules in the scripts to avoid compatibility issues with python 3.8 w32
+These modules crash when they are imported with the python distrib included with qchartist
+
+To do so, i asked chatgpt to rewritte my python script without using pandas and numpy modules, the way the script functions exactly the same way.
+
+to obtain a 1h chart: use python pcgeck.py with command line arguments --interval 5min --days 33 then use period converter of 12 in qchartist
+to obtain a 4h chart : use python pcgeck.py with command line arguments --interval 15min --days 90 then use period converter of 16 in qchartist
+to obtain a daily chart : use the obtained 4h chart and use period converter of 6 in qchartist
+
+python pcoingecklist.py gets the list of all available symbols
+
+All that will soon be implemented for easy use via the data source gui interface
+
+Enjoy! 
